@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/block/list_changed_block.dart';
+import 'package:myapp/block/list_changed_event.dart';
+import 'package:myapp/block/list_changed_state.dart';
 import 'package:myapp/database/DatabaseHelper.dart';
 import 'package:myapp/screen/main_screen.dart';
 import 'package:myapp/screen/note.dart';
@@ -34,13 +36,15 @@ class _PhysicsAction extends State<PhysicsAction> {
   final block = ListChangedBlock();
 
 
-  // List<Note> list = [];
+  List<Note> list = [];
 
 
   @override
   void initState() {
+    // final bloc = context.read<ListChangedBlock>();
+    // bloc.add(ListLoadedChangeEvent());
+    block.add(ListLoadedChangeEvent());
     super.initState();
-    // getAllNotes();
   }
 
 
@@ -54,36 +58,38 @@ class _PhysicsAction extends State<PhysicsAction> {
       body: BlocBuilder<ListChangedBlock, ListChangedState>(
         bloc: ListChangedBlock(),
         builder: (context, state) {
-          state.myList.isEmpty ? state = EmptyListState(myList: mainPhysicsList) : state = ListChangedState(myList: mainPhysicsList);
-          if (state is! EmptyListState) {
+          if (state is ListLoadedState) {
             return ListView.separated(
               separatorBuilder: (context, i) => const Divider(color: Colors.black,),
-              itemCount: mainPhysicsList.length,
+              itemCount: state.myList.length,
               itemBuilder: (context, index) => ListTile(
-                title: Text(mainPhysicsList[index].title), 
-                subtitle: Text(mainPhysicsList[index].description),
+                title: Text(state.myList[index].title), 
+                subtitle: Text(state.myList[index].description),
                 tileColor: Colors.white,
                 trailing: const Icon(Icons.arrow_forward_ios),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Post(mainPhysicsList[index].title, '${mainPhysicsList[index].description}\n \n ${mainPhysicsList[index].description}'))),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Post(state.myList[index].title, '${state.myList[index].description}\n \n ${state.myList[index].description}'))),
               )
             );
-          } else {
+          } 
+          if (state is EmptyListState) {
             return const Center(
               child: Text('Добавьте вашу первую заметку', style: TextStyle(color: Colors.black),
                 )
               );
+            }
+            return const Center(child: CircularProgressIndicator());
           }
-        }
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CreatePost())), 
+        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>
+         const CreatePost())), 
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
   // getAllNotes() async {
-  //   list = await DatabaseHelper.getAllNotes();
+  //   mainPhysicsList = await DatabaseHelper.getAllNotes();
   // }
 
 }

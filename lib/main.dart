@@ -1,9 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myapp/block/create_post_block.dart';
+import 'package:myapp/block/list_changed_block.dart';
 import 'package:myapp/theme/theme.dart';
 import 'package:myapp/screen/main_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Wrapper());
+}
+
+class Wrapper extends StatelessWidget {
+  const Wrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CreatePostBlock>(
+          create: (context) => CreatePostBlock(CreatedPostState())
+          ), 
+        BlocProvider<ListChangedBlock>(
+          create: (context) => ListChangedBlock(),
+          )
+        ],
+      child: const MyApp()     
+    );
+  }
+  
 }
 
 class MyApp extends StatelessWidget {

@@ -1,44 +1,28 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myapp/block/list_changed_event.dart';
+import 'package:myapp/block/list_changed_state.dart';
 import 'package:myapp/database/DatabaseHelper.dart';
-import 'package:myapp/screen/main_screen.dart';
 import 'package:myapp/screen/note.dart';
 
 
 class ListChangedBlock extends Bloc<ListChangeEvent, ListChangedState>{
 
-  ListChangedBlock() : super(ListChangedState(myList: mainPhysicsList)) {
-    on<LoadingChangeEvent>((event, emit) => emit(LoadingListChangeState(myList: mainPhysicsList))
-    );
-    on<ListChangeEvent>((event, emit) {
-      if (mainPhysicsList.isNotEmpty) {
-        (event, emit) => emit(ListChangedState(myList: mainPhysicsList));
+  ListChangedBlock() : super(ListChangedState()) {
+    on<ListLoadedChangeEvent>(
+      (event, emit) async {
+        emit(LoadingListChangeState());     
+        fut.then((list) => list);
+          if (list.isEmpty) {
+            emit(EmptyListState());
+          }
+          else {
+            emit(ListLoadedState(myList: list));
+        }
       }
-    });
+    );
   }
 }
 
-class ListChangeEvent {}
+List<Note> list = [];
 
-class LoadingChangeEvent extends ListChangeEvent{}
-
-class ListChangedState {
-  final List<Note> myList;
-
-  ListChangedState({required this.myList});  
-}
-
-class LoadingListChangeState extends ListChangedState {
-  LoadingListChangeState({required super.myList});
-}
-
-class ListUpdated extends ListChangedState {
-  ListUpdated({required super.myList});
-}
-
-class EmptyListState extends ListChangedState {
-  EmptyListState({required super.myList});
-}
-
-// Future<List<Note>> getAllNotes() async {
-//   return await DatabaseHelper.getAllNotes();
-// }
+Future<List<Note>> fut = Future(() => DatabaseHelper.getAllNotes() );
