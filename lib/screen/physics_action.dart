@@ -38,15 +38,13 @@ class _PhysicsAction extends State<PhysicsAction> {
 
   List<Note> list = [];
 
-
   @override
   void initState() {
-    // final bloc = context.read<ListChangedBlock>();
-    // bloc.add(ListLoadedChangeEvent());
     block.add(ListLoadedChangeEvent());
+    // makeList();
     super.initState();
   }
-
+  
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +54,7 @@ class _PhysicsAction extends State<PhysicsAction> {
         title: const Text('Физические нагрузки'),
       ),
       body: BlocBuilder<ListChangedBlock, ListChangedState>(
-        bloc: ListChangedBlock(),
+        bloc: block,
         builder: (context, state) {
           if (state is ListLoadedState) {
             return ListView.separated(
@@ -84,12 +82,11 @@ class _PhysicsAction extends State<PhysicsAction> {
         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>
          const CreatePost())), 
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ), 
     );
   }
 
-  // getAllNotes() async {
-  //   mainPhysicsList = await DatabaseHelper.getAllNotes();
-  // }
-
+  void makeList() async {
+    list = await DatabaseHelper.getAllNotes();
+  }
 }

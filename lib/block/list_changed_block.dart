@@ -8,21 +8,27 @@ import 'package:myapp/screen/note.dart';
 class ListChangedBlock extends Bloc<ListChangeEvent, ListChangedState>{
 
   ListChangedBlock() : super(ListChangedState()) {
-    on<ListLoadedChangeEvent>(
-      (event, emit) async {
+    on<ListLoadedChangeEvent> ((event, emit) async {
+      try {
         emit(LoadingListChangeState());     
-        fut.then((list) => list);
-          if (list.isEmpty) {
-            emit(EmptyListState());
-          }
-          else {
-            emit(ListLoadedState(myList: list));
-        }
+        list = await DatabaseHelper.getAllNotes();
+        emit(ListLoadedState(myList: list));
+      } catch (e) {
+        emit(EmptyListState());
       }
+        // if (list.isEmpty) {
+        //   emit(EmptyListState());
+        // } else {
+        //   emit(ListLoadedState(myList: list));
+        // }
+      }
+
     );
+    on<ListLoadingChangeEvent> ((event, emit) => print('cработало событие загрузки'),);
+
   }
 }
 
 List<Note> list = [];
 
-Future<List<Note>> fut = Future(() => DatabaseHelper.getAllNotes() );
+// Future<List<Note>> fut = Future(() => DatabaseHelper.getAllNotes());
