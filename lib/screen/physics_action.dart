@@ -69,7 +69,7 @@ class _PhysicsAction extends State<PhysicsAction> {
                   title: Text(state.myList[index].title), 
                   subtitle: Text(state.myList[index].description),
                   tileColor: Colors.white,
-                  trailing: const Icon(Icons.arrow_forward_ios),
+                  trailing: IconButton(icon: const Icon(Icons.more_vert), onPressed: () {print('нажали на кнопку');},),
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Post(state.myList[index].title, '${state.myList[index].description}\n \n ${state.myList[index].description}'))),
                 )
               );

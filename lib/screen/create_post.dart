@@ -44,7 +44,7 @@ class _CreatePost extends State<CreatePost> {
           IconButton(
             onPressed: () {
             final bloc = context.read<CreatePostBlock>();
-            bloc.add(CreatePostEvent(note: Note(myHeaderController.text, mySubtitleController.text)));
+            bloc.add(CreatePostEvent(note: Note(title: myHeaderController.text, description: mySubtitleController.text)));
             Navigator.pop(context);
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const PhysicsAction()));
             },

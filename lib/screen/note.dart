@@ -1,18 +1,33 @@
-class Note {
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  int? id;
-  String title;
-  String description;
-  // String date;
+part 'note.freezed.dart';
+part 'note.g.dart';
 
-  Note(this.title, this.description);
+@freezed
+class Note with _$Note {
 
-  toMap() {
-    return {
-      'title': title,
-      'description': description,
-      };
-  }
+  // int? id;
+  // String title;
+  // String description;
+  // // String date;
+
+  const Note._();
+
+  const factory Note({
+    int? id,
+    required String title, 
+    required String description,
+    }) = _Note;
+
+  factory Note.fromJson(Map<String, Object?> json) => _$NoteFromJson(json);
+
+  // toMap() {
+  //   return {
+  //     'title': title,
+  //     'description': description,
+  //     };
+  // }
 
   // toList(Map<String, dynamic> e) {
   //   e.forEach(

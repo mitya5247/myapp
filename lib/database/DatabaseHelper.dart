@@ -37,7 +37,7 @@ class DatabaseHelper {
       final database = await DatabaseHelper.db();
       int num = await database.insert(
         'notes',
-        note.toMap(),
+        note.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
       print('Объект создан с id $num');
@@ -56,7 +56,7 @@ class DatabaseHelper {
                     'title': title as String,
                     'description': description as String,
                   } in noteMaps)
-                Note(title, description),
+                Note(title: title, description:  description),
               ];
 
       return notes;
