@@ -20,6 +20,5 @@ class CreatePostEvent {
   final Note note;
 
   CreatePostEvent({required this.note}); 
-
 }
 

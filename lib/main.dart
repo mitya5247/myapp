@@ -19,9 +19,9 @@ class Wrapper extends StatelessWidget {
         BlocProvider<CreatePostBlock>(
           create: (context) => CreatePostBlock(CreatedPostState())
           ), 
-        // BlocProvider<ListChangedBlock>(
-        //   create: (context) => ListChangedBlock(),
-        //   )
+        BlocProvider<ListChangedBlock>(
+          create: (context) => ListChangedBlock(),
+          )
         ],
       child: const MyApp()     
     );
