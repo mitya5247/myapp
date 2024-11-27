@@ -5,11 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/block/list_changed_block.dart';
 import 'package:myapp/block/list_changed_event.dart';
 import 'package:myapp/block/list_changed_state.dart';
-import 'package:myapp/database/DatabaseHelper.dart';
 import 'package:myapp/screen/note.dart';
 import 'package:myapp/screen/post.dart';
 import 'package:myapp/screen/create_post.dart';
-import 'package:path/path.dart';
 
   // var list =
   // [
@@ -69,7 +67,28 @@ class _PhysicsAction extends State<PhysicsAction> {
                   title: Text(state.myList[index].title), 
                   subtitle: Text(state.myList[index].description),
                   tileColor: Colors.white,
-                  trailing: IconButton(icon: const Icon(Icons.more_vert), onPressed: () {print('нажали на кнопку');},),
+                  trailing: PopupMenuButton(
+                        itemBuilder: (context) { 
+                          return [
+                            const PopupMenuItem(value: 1, child: Row(
+                              children: [SizedBox(child: Text('Открыть'),)],
+                              ),
+                            ),
+                            const PopupMenuItem(value: 1, child: Row(
+                              children: [SizedBox(child: Text('Редактировать'),)],
+                              ),
+                            ),
+                            const PopupMenuItem(value: 1, child: Row(
+                              children: [SizedBox(child: Text('Удалить'),)],
+                              ),
+                            ),
+                            const PopupMenuItem(value: 1, child: Row(
+                              children: [SizedBox(child: Text('Информация'),)],
+                              ),
+                            )
+                        ];
+                        },
+                        ),
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Post(state.myList[index].title, '${state.myList[index].description}\n \n ${state.myList[index].description}'))),
                 )
               );
