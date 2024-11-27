@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/block/create_post_block.dart';
@@ -5,6 +6,7 @@ import 'package:myapp/screen/note.dart';
 import 'package:myapp/screen/physics_action.dart';
 
 
+@RoutePage()
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
 

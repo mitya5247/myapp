@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/database/DatabaseHelper.dart';
 import 'package:myapp/screen/nav_bar.dart';
@@ -6,7 +7,7 @@ import 'package:myapp/screen/note.dart';
 
 List<Note> mainPhysicsList = [];
 
-
+@RoutePage()
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
