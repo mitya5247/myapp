@@ -9,3 +9,10 @@ class ListLoadedChangeEvent extends ListChangeEvent{
 
   ListLoadedChangeEvent({this.completer});
 }
+
+
+class DeletePostEvent extends ListChangeEvent {
+  final int? id;
+
+  DeletePostEvent({required this.id});
+}

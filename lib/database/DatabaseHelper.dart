@@ -9,6 +9,7 @@ class DatabaseHelper {
       await database.execute("""
         DROP TABLE IF EXISTS notes;
         """);
+      print('database was dropped with version: ${ await database.getVersion()}');
       await database.execute("""
           CREATE TABLE IF NOT EXISTS notes(
             id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -26,8 +27,11 @@ class DatabaseHelper {
         version: 1,
         onCreate: (Database database, int version) async {
           await createTables(database);
+          print('table was created');
         },
-        onOpen: (db) async => print('database was created with version: ${ await db.getVersion()}'),
+        onOpen: (db) async {
+          print('database was created with version: ${ await db.getVersion()}');
+        }
       );
     } 
 
@@ -53,10 +57,11 @@ class DatabaseHelper {
 
       notes = [
               for (final {
+                    'id': id as int,
                     'title': title as String,
                     'description': description as String,
                   } in noteMaps)
-                Note(title: title, description:  description),
+                Note(id: id, title: title, description: description),
               ];
 
       return notes;
@@ -69,5 +74,16 @@ class DatabaseHelper {
       await database.rawDelete("""
         DELETE * FROM notes;
         """);
+    }
+
+    static Future<void> deleteNote(int? id) async {
+      final database = await DatabaseHelper.db();
+
+      await database.delete('notes', where: 'id = ?', whereArgs: [id]);
+    }
+
+    static Future<void> deleteTable() async {
+      final database = await DatabaseHelper.db();
+      database.rawDelete('DROP TABLE IF EXISTS notes');
     }
 }

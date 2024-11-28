@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myapp/block/create_post_event.dart';
+import 'package:myapp/block/create_post_state.dart';
 import 'package:myapp/database/DatabaseHelper.dart';
-import 'package:myapp/screen/note.dart';
 
-class CreatePostBlock extends Bloc<CreatePostEvent, CreatedPostState> {
+class CreatePostBlock extends Bloc<PostEvent, CreatedPostState> {
   CreatePostBlock(super.initialState) {
     on<CreatePostEvent>(
       (event, emit) {
@@ -13,12 +14,5 @@ class CreatePostBlock extends Bloc<CreatePostEvent, CreatedPostState> {
   }
 }
 
-class CreatedPostState {
-}
 
-class CreatePostEvent {
-  final Note note;
-
-  CreatePostEvent({required this.note}); 
-}
 

@@ -14,6 +14,15 @@ class ListChangedBlock extends Bloc<ListChangeEvent, ListChangedState>{
         event.completer?.complete();
       }
     );
+
+    on<DeletePostEvent>(
+      (event, emit) async {
+        int? noteId = event.id;
+        DatabaseHelper.deleteNote(noteId);
+        list = await DatabaseHelper.getAllNotes();
+        emit(ListLoadedState(myList: list));
+      }
+    );
   }
 }
 

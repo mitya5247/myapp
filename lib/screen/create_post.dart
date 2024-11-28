@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/block/create_post_block.dart';
+import 'package:myapp/block/create_post_event.dart';
+import 'package:myapp/block/create_post_state.dart';
 import 'package:myapp/route/router.gr.dart';
 import 'package:myapp/screen/note.dart';
 

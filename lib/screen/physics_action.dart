@@ -6,9 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/block/list_changed_block.dart';
 import 'package:myapp/block/list_changed_event.dart';
 import 'package:myapp/block/list_changed_state.dart';
+import 'package:myapp/route/router.gr.dart';
 import 'package:myapp/screen/note.dart';
-import 'package:myapp/screen/post.dart';
-import 'package:myapp/screen/create_post.dart';
 
   // var list =
   // [
@@ -72,15 +71,20 @@ class _PhysicsAction extends State<PhysicsAction> {
                   trailing: PopupMenuButton(
                         itemBuilder: (context) { 
                           return [
-                            const PopupMenuItem(value: 1, child: Row(
-                              children: [SizedBox(child: Text('Открыть'),)],
-                              ),
+                            PopupMenuItem(value: 1, 
+                              onTap: () => context.router.push(Post(title: state.myList[index].title, subtitle: state.myList[index].description)),
+                              child: const Row(
+                                children: [SizedBox(child: Text('Открыть'),)],
+                                ),
                             ),
-                            const PopupMenuItem(value: 1, child: Row(
-                              children: [SizedBox(child: Text('Редактировать'),)],
-                              ),
+                            const PopupMenuItem(value: 1, 
+                              child: Row(
+                                children: [SizedBox(child: Text('Редактировать'),)],
+                                ),
                             ),
-                            const PopupMenuItem(value: 1, child: Row(
+                            PopupMenuItem(value: 1,
+                              onTap: () => block.add(DeletePostEvent(id: state.myList[index].id)),
+                              child: const Row(
                               children: [SizedBox(child: Text('Удалить'),)],
                               ),
                             ),
@@ -91,7 +95,7 @@ class _PhysicsAction extends State<PhysicsAction> {
                         ];
                         },
                         ),
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Post(state.myList[index].title, '${state.myList[index].description}\n \n ${state.myList[index].description}'))),
+                  onTap: () => context.router.push(Post(title: state.myList[index].title, subtitle: state.myList[index].description)),
                 )
               );
             } 
@@ -106,8 +110,7 @@ class _PhysicsAction extends State<PhysicsAction> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>
-         const CreatePost())), 
+        onPressed: () => context.pushRoute(const CreatePost()), 
         child: const Icon(Icons.add),
       ), 
     );
