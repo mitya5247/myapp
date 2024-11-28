@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/block/create_post_block.dart';
 import 'package:myapp/block/list_changed_block.dart';
+import 'package:myapp/route/router.dart';
 import 'package:myapp/theme/theme.dart';
-import 'package:myapp/screen/main_screen.dart';
 
 void main() {
   runApp(const Wrapper());
@@ -23,19 +23,23 @@ class Wrapper extends StatelessWidget {
           create: (context) => ListChangedBlock(),
           )
         ],
-      child: const MyApp()     
+      child: MyApp()     
     );
   }
   
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
+  MyApp({super.key});
+
+  final _appRouter = AppRouter();
+
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Дневник здоровья',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: mainBarColor),
@@ -59,7 +63,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MyHomePage(title: 'Дневник здоровья'),
+      routerDelegate: _appRouter.delegate(),
+      routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }
 }

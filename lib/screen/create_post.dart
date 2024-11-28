@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/block/create_post_block.dart';
+import 'package:myapp/route/router.gr.dart';
 import 'package:myapp/screen/note.dart';
-import 'package:myapp/screen/physics_action.dart';
 
 
 @RoutePage()
@@ -47,8 +47,7 @@ class _CreatePost extends State<CreatePost> {
             onPressed: () {
             final bloc = context.read<CreatePostBlock>();
             bloc.add(CreatePostEvent(note: Note(title: myHeaderController.text, description: mySubtitleController.text)));
-            Navigator.pop(context);
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const PhysicsAction()));
+            context.router.popAndPush(const PhysicsAction());
             },
             icon: const Icon(Icons.save),
           )

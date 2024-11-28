@@ -36,17 +36,10 @@ class CreatePost extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.MyHomePage]
-class MyHomeRoute extends _i5.PageRouteInfo<MyHomeRouteArgs> {
-  MyHomeRoute({
-    _i6.Key? key,
-    required String title,
-    List<_i5.PageRouteInfo>? children,
-  }) : super(
+class MyHomeRoute extends _i5.PageRouteInfo<void> {
+  const MyHomeRoute({List<_i5.PageRouteInfo>? children})
+      : super(
           MyHomeRoute.name,
-          args: MyHomeRouteArgs(
-            key: key,
-            title: title,
-          ),
           initialChildren: children,
         );
 
@@ -55,29 +48,9 @@ class MyHomeRoute extends _i5.PageRouteInfo<MyHomeRouteArgs> {
   static _i5.PageInfo page = _i5.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<MyHomeRouteArgs>();
-      return _i2.MyHomePage(
-        key: args.key,
-        title: args.title,
-      );
+      return const _i2.MyHomePage();
     },
   );
-}
-
-class MyHomeRouteArgs {
-  const MyHomeRouteArgs({
-    this.key,
-    required this.title,
-  });
-
-  final _i6.Key? key;
-
-  final String title;
-
-  @override
-  String toString() {
-    return 'MyHomeRouteArgs{key: $key, title: $title}';
-  }
 }
 
 /// generated route for

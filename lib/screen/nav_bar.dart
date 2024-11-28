@@ -1,6 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/theme/theme.dart';
-import 'package:myapp/screen/physics_action.dart';
+import 'package:myapp/route/router.gr.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
@@ -19,7 +20,7 @@ class NavBar extends StatelessWidget {
             ),
             ListTile(
               title: const Text('Физическая нагрузка'),
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const PhysicsAction(),)),
+              onTap: () => context.pushRoute(const PhysicsAction()),
             ),
               ListTile(
               title: const Text('Сон'),
